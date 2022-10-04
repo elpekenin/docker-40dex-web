@@ -19,12 +19,21 @@ logging.basicConfig(
 )
 logging.info("Started !!")
 
-client = MongoClient(
-    config.db_ip,
-    username=config.db_user,
-    password=config.db_pass,
-    authSource=config.db_auth
-)
+if config.db_uri:
+    client = MongoClient(config.db_uri)
+else:
+    try:
+        client = MongoClient(
+            config.db_ip,
+            username=config.db_user,
+            password=config.db_pass,
+            authSource=config.db_auth
+        )
+    except:
+        import sys
+        logging.error("Can't connect to MongoDB")
+        sys.exit()
+
 database = client["website"]
 
 app = Flask(__name__)

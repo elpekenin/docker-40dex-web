@@ -24,6 +24,8 @@ services:
     build: https://raw.githubusercontent.com/elpekenin/docker-bot-web/main/Dockerfile
     container_name: bot-web
     environment:
+      DB_URI: "${DB_URI}" #uri takes precedence over parameterized login
+
       DB_IP: "${DB_IP}"
       DB_USER: "${DB_USER}"
       DB_PASS: "${DB_PASS}"
