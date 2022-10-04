@@ -5,7 +5,7 @@ MAINTAINER Pablo (elpekenin) Martinez Bernal "martinezbernalpablo@gmail.com"
 
 # Download all files
 WORKDIR /app
-RUN git clone https://github.com/elpekenin/docker-website && mv -r docker-website .
+RUN git clone https://github.com/elpekenin/docker-website && shopt -s dotglob && mv -v docker-website/* .
 
 # Install dependencies
 RUN pip3 install -r requirements.txt
