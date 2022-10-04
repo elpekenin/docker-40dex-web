@@ -5,7 +5,7 @@ By no means a complete tutorial here. If you want to make a copy, you'll need to
 version: "3.9"
 services:
   web:
-    build: /folder/where/Dockerfile/is
+    build: https://raw.githubusercontent.com/elpekenin/docker-website/main/Dockerfile
     container_name: web
     environment:
       DB_IP: "${DB_IP}"
@@ -21,7 +21,7 @@ services:
         target: /app/logs
 
   bot-web:
-    build: /folder/where/Dockerfile/is
+    build: https://raw.githubusercontent.com/elpekenin/docker-bot-web/main/Dockerfile
     container_name: bot-web
     environment:
       DB_IP: "${DB_IP}"
@@ -29,7 +29,7 @@ services:
       DB_PASS: "${DB_PASS}"
       DB_AUTH: "${DB_AUTH}"
       BOT_TOKEN: "${BOT_TOKEN}"
-      BOT_USERNAME: "elpekenin" #your telegram username here
+      BOT_USERNAME: "elpekenin" #your telegram username here, without @
     restart: always
     volumes:
       - type: bind
@@ -52,6 +52,6 @@ services:
 ```
 
   If you want to make changes (eg use a different database)
-    1) Make your own fork
-    2) Update your Dockerfile to build from it
-    3) Change code as wished
+    1. Make your own fork
+    1. Update your Dockerfile to build from it
+    1. Change code as wished
