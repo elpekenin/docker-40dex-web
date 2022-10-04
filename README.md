@@ -1,4 +1,4 @@
-Files used to build by website's docker container. Take also a look at [bot's repo](https://github.com/elpekenin/docker-bot-web)
+Files used to build [my website](http://elpekenin.tk/40dex)'s docker container. Take also a look at [bot's repo](https://github.com/elpekenin/docker-bot-web)
 
 By no means a complete tutorial here. If you want to make a copy, you'll need to add a `.env` file with your own MongoDB instance credentials, and bot token.... and everything should work. Your `compose.yml` should be similar to:
 ```
