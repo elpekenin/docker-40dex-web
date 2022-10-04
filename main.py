@@ -83,7 +83,7 @@ with open("./build-timestamp", "r") as f:
 app.jinja_env.globals["build_date"] = build_date
 
 
-commit = subprocess.check_output(['git', 'rev-parse', 'HEAD']).decode('ascii').strip()
+commit = subprocess.check_output(['git', 'rev-parse', '--short', 'HEAD']).decode('ascii').strip()
 
 app.jinja_env.globals["commit"] = commit
 
