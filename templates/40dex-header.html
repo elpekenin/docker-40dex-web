@@ -1,0 +1,39 @@
+<div class="grid justify-content-center">
+  
+  <div class="row justify-content-md-center">
+    <div class="col-auto">
+      <b style="font-size: calc(1vh + 1vmin);" class="text-white">
+        &#9888 Sprites that contain a shiny part are available for trades (may not be updated) &#9888
+      </b>
+    </div>
+  </div>
+
+  <div class="row justify-content-md-center">
+    <div class="col-auto">
+      <b style="font-size: calc(1vh + 1vmin);" class="text-white">
+        &#9888 Los sprites con una parte shiny están disponibles para cambio (quizás no esté actualizado) &#9888
+      </b>
+    </div>
+ </div>
+
+ <div class="row justify-content-md-center">
+  <div class="col-auto">
+  <nav aria-label="region selector">
+    <ul class="pagination">
+{% if region > 1 %}
+      <li class="page-item"><a class="page-link" href="{{path}}/{{region-1}}" style="font-size: calc(1vh + 1vmin);"> &laquo; </a></li>
+{% endif %}
+
+{% for reg in range(1, max_region+1) %}
+      <li class="page-item{% if reg==region %} active{% endif %}"><a class="page-link" href="{{path}}/{{reg}}" style="font-size: calc(1vh + 1vmin);">{{reg}}</a></li>
+{% endfor %} {# Region #}
+
+{% if region < max_region %}
+      <li class="page-item"><a class="page-link" href="{{path}}/{{region+1}}" style="font-size: calc(1vh + 1vmin);"> &raquo; </a></li>
+{% endif %}
+    </ul>
+  </nav> {# Pagination #}
+  </div>
+ </div>
+</div> {# Container #}
+</nav> {# Navbar #}
