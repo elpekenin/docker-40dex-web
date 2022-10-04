@@ -5,12 +5,21 @@
 <nav class="navbar navbar-dark">
 {% include "40dex-header.html" %} {# Placeholder for alignment #}
 
+{# Searchbar #}
+<br>
+<div class="input-group mb-3" style="width: 20%; margin-left: auto; margin-right: 50px;">
+   <div class="input-group-prepend">
+    <span class="input-group-text" id="basic-addon1">🔍</span>
+  </div>
+  <input type="text" class="form-control" placeholder="Search" oninput="rows_filter(this.value);" aria-label="Username" aria-describedby="basic-addon1">
+</div>
+
 {# Pokemon sprites #}
 <table style="margin-left: auto; margin-right: auto; text-align: center; transform: translateY(10px);">
 {# Region selector #}
 {% for row in data %}
   {% set vars = {'done': False} %}
-  <tr>
+  <tr class="{{ class_from_row(row) }}">
     <td>
   {% for poke, values in row.items() %}
     {% set dex = get_dex(poke) %}

@@ -83,9 +83,19 @@ with open("./build-timestamp", "r") as f:
 app.jinja_env.globals["build_date"] = build_date
 
 
-commit = subprocess.check_output(['git', 'rev-parse', '--short', 'HEAD']).decode('ascii').strip()
+try:
+    commit = subprocess.check_output(['git', 'rev-parse', '--short', 'HEAD']).decode('ascii').strip()
+except:
+    commit = "Couldn't find commit hash"
 
 app.jinja_env.globals["commit"] = commit
+
+
+def class_from_row(row):
+    return " ".join(row.keys())
+
+app.jinja_env.globals["class_from_row"] = class_from_row
+
 
 # =======
 # Routes
