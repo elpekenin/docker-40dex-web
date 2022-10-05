@@ -3,6 +3,7 @@ from flask import (
     Flask,
     render_template
 )
+import json
 import logging
 from pymongo import MongoClient
 from requests import get
@@ -33,50 +34,26 @@ database = client["website"]
 
 app = Flask(__name__)
 
+with open("dex-name.json", "r") as f:
+    dex_cache = json.load(f)
+
+
 # =======
 # Funcs
-def get_dex(name):
-    name = name.lower()
-    
-    table = database["pokedex"]
+def read_from_cache(query):
+   return dex_cache.get(query, 0) 
 
-    try:
-        return table.find_one({"name": name})["id"]
-   
-    except Exception as e:
-        try:
-            logging.info(f"Fetching {name} from pokeAPI (get_dex)") 
-            data = get(f"https://pokeapi.co/api/v2/pokemon/{name}").json()
-            table.insert_one(data)
-            return data["id"]
-            
-        except Exception as e:
-            logging.error(f"Pokemon couldn't be found at pokeAPI: {name} (get_dex)")
-            logging.error(e)
-            return 0
+
+def get_dex(name):   
+    # Don't use the DB nor PokeAPI, it's slow
+    # FIXME This will break when new pokemons get added
+    return read_from_cache(name.lower())
 
 app.jinja_env.globals["get_dex"] = get_dex
 
 
 def get_name(dex):
-    dex = int(dex)
-
-    table = database["pokedex"]
-
-    try:
-        return table.find_one({"id": dex})["name"]
-   
-    except Exception as e:
-        try:
-            logging.info(f"Fetching {dex} from pokeAPI (get_name)") 
-            data = get(f"https://pokeapi.co/api/v2/pokemon/{dex}").json()
-            table.insert_one(data)
-            return data["name"]
-            
-        except Exception as e:
-            logging.error(f"Pokemon couldn't be found at pokeAPI: {dex} (get_name)")
-            logging.error(e)
-            return 0
+    return read_from_cache(str(dex))
 
 app.jinja_env.globals["get_name"] = get_name
 
