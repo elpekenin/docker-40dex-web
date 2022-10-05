@@ -53,7 +53,7 @@ services:
     restart: always
 ```
 
-  If you want to make changes (eg use a different database)
-    1. Make your own fork
-    1. Update your Dockerfile to build from it
-    1. Change code as wished
+If you want to make changes (eg use a different database)
+1. Make your own fork
+1. Update your Dockerfile to build from it
+1. Change code as wished
