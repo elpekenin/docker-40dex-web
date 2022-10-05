@@ -7,11 +7,11 @@
 
 {# Searchbar #}
 <br>
-<div class="input-group mb-3" style="width: 20%; margin-left: auto; margin-right: 50px;">
+<div class="input-group mb-3" style="width: min(50vw, 500px); margin-left: auto; margin-right: 10vw;">
    <div class="input-group-prepend">
-    <span class="input-group-text" id="basic-addon1">🔍</span>
+    <span class="input-group-text">🔍</span>
   </div>
-  <input type="text" class="form-control" placeholder="Search" oninput="rows_filter(this.value);" aria-label="Username" aria-describedby="basic-addon1">
+  <input type="text" class="form-control" placeholder="Search" oninput="rows_filter(this.value);">
 </div>
 
 {# Pokemon sprites #}
@@ -19,8 +19,9 @@
 {# Region selector #}
 {% for row in data %}
   {% set vars = {'done': False} %}
+  {% set size=width_from_row(row) %}
   <tr class="{{ class_from_row(row) }}">
-    <td>
+    <td  style="--size: {{size}};">
   {% for poke, values in row.items() %}
     {% set dex = get_dex(poke) %}
 
@@ -42,14 +43,13 @@
     {% if values[1] %} {# Trade counter #}
       {% set image_path="sprites/pokemon/edited/{}.png".format(dex|string) %}
     {% endif %}
-
       <div style="position: relative;" class="d-inline-block">
-        <img src="{{url_for("static", filename=image_path)}}" class="img-fluid float-left" style="border-radius: 25px; border: 3px solid {{border_color}};">
-        <div style="font-weight: bold; font-size: 20px; text-shadow: 0 0 2px #000; position: absolute; top: 2%; right: 10%; font-family: sans-serif;"> {{values[0]}} </div>
+        <img loading="lazy" src="{{url_for("static", filename=image_path)}}" class="img-fluid float-left" style="width: var(--size); height: var(--size); border-radius: calc(0.3*var(--size)); border: 3px solid {{border_color}};">
+        <div style="font-weight: bold; font-size: calc(0.2*var(--size)); text-shadow: 0 0 2px #000; position: absolute; top: 2%; right: 10%; font-family: sans-serif;"> {{values[0]}} </div>
       </div>                       
   {% endfor %} {# Pokes #}
 
-      <h1 style="display: inline-block; transform: translateY(11px);"><b> &nbsp {{ "✅" if vars.done else "❌" }}</b></h1>
+      <b class="align-middle" style="display: inline-block; font-size: calc(0.6*var(--size));"> &nbsp {{ "✅" if vars.done else "❌" }}</b>
     </td>
   </tr>
 {% endfor %} {# Families #}

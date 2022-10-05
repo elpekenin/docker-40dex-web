@@ -41,13 +41,13 @@ with open("dex-name.json", "r") as f:
 # =======
 # Funcs
 def read_from_cache(query):
-   return dex_cache.get(query, 0) 
+   return dex_cache.get(query, 0)
 
 
 def get_dex(name):   
     # Don't use the DB nor PokeAPI, it's slow
     # FIXME This will break when new pokemons get added
-    return read_from_cache(name.lower())
+    return read_from_cache(str(name).lower())
 
 app.jinja_env.globals["get_dex"] = get_dex
 
@@ -77,6 +77,11 @@ def class_from_row(row):
 
 app.jinja_env.globals["class_from_row"] = class_from_row
 
+
+def width_from_row(row):
+    return f"min(100px, {100/(len(row)+3)}vw)"
+
+app.jinja_env.globals["width_from_row"] = width_from_row
 
 # =======
 # Routes
