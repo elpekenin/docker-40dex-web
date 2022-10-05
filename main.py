@@ -3,6 +3,7 @@ from flask import (
     Flask,
     render_template
 )
+from flask_compress import Compress
 import json
 import logging
 from pymongo import MongoClient
@@ -33,6 +34,7 @@ else:
 database = client["website"]
 
 app = Flask(__name__)
+Compress(app)
 
 with open("dex-name.json", "r") as f:
     dex_cache = json.load(f)
