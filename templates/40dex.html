@@ -39,12 +39,12 @@
       {% set border_color="green" %}
     {% endif %}
 
-    {% set image_path="sprites/pokemon/{}.png".format(dex|string) %}
+    {% set image_path="images/sprites/original/{}.png".format(dex|string) %}
     {% if values[1] %} {# Trade counter #}
-      {% set image_path="sprites/pokemon/edited/{}.png".format(dex|string) %}
+      {% set image_path="images/sprites/edited/{}.png".format(dex|string) %}
     {% endif %}
       <div style="position: relative;" class="d-inline-block">
-        <img loading="lazy" src="{{url_for("static", filename=image_path)}}" class="img-fluid float-left" style="width: var(--size); height: var(--size); border-radius: calc(0.3*var(--size)); border: 3px solid {{border_color}};">
+        <img loading="lazy" src="{{url_for('static', filename=image_path)}}" class="img-fluid float-left" style="width: var(--size); height: var(--size); border-radius: calc(0.3*var(--size)); border: 3px solid {{ border_color }};">
         <div style="font-weight: bold; font-size: calc(0.2*var(--size)); text-shadow: 0 0 2px #000; position: absolute; top: 2%; right: 10%; font-family: sans-serif;"> {{values[0]}} </div>
       </div>                       
   {% endfor %} {# Pokes #}
