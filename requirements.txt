@@ -1,5 +1,4 @@
 flask
 gunicorn
-pymongo
-pymongo[srv]
+pymongo[srv]>=3.12.0
 requests
