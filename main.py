@@ -3,7 +3,6 @@ from flask import (
     Flask,
     render_template
 )
-from flask_caching import Cache
 import logging
 from pymongo import MongoClient
 from requests import get
@@ -33,17 +32,6 @@ else:
 database = client["website"]
 
 app = Flask(__name__)
-
-# Improve performance
-app.jinja_env.cache = {}
-
-config = {
-    "DEBUG": True,
-    "CACHE_TYPE": "SimpleCache",  
-    "CACHE_DEFAULT_TIMEOUT": 600
-}
-app.config.from_mapping(config)
-cache = Cache(app)
 
 # =======
 # Funcs
@@ -149,7 +137,6 @@ def dex_stats():
 
 @app.get("/40dex/")
 @app.get("/40dex/<_region>/")
-@cache.cached(timeout=600)
 def dex(_region="kanto"):
     try:
         region = int(_region) #parse to region id

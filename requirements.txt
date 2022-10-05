@@ -1,5 +1,4 @@
 flask
-Flask-Caching
 gunicorn
 pymongo[srv]>=3.12.0
 requests
