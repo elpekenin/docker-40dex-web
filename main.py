@@ -3,12 +3,14 @@ from flask import (
     Flask,
     redirect,
     render_template,
+    request,
     send_from_directory,
     url_for
 )
 from flask_compress import Compress
 import json
 import logging
+import os
 from os import path
 from pymongo import MongoClient
 from requests import get
@@ -225,3 +227,18 @@ def dex_stats():
 @app.get("/40dex/<_region>/")
 def dex(_region="kanto"):
     return get_40dex_page(parse_region(_region))
+
+@app.post("/re-gen/<_region>/")
+def regen(_region="kanto")
+    if request.get_json()["password"] != config.rm_pass:
+        return "No permission"
+
+    region = parse_region(_region)
+
+    # Remove file
+    os.remove(f"static/html/40dex/{region}.html")
+
+    # Gen new file
+    get_40dex_page(region)
+
+    return "Updated !!"

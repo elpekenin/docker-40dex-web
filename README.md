@@ -12,6 +12,7 @@ services:
     container_name: web
     environment:
       DB_URI: "${DB_URI}"
+      RM_PASS: "${RM_PASS}"
     ports:
       - 80:5000
     restart: always
@@ -33,6 +34,8 @@ services:
 
       BOT_TOKEN: "${BOT_TOKEN}"
       BOT_USERNAME: "elpekenin" #your telegram username here, without @
+
+      RM_PASS: "${RM_PASS}" #password to force re-generation of html
     restart: always
     volumes:
       - type: bind
