@@ -16,14 +16,17 @@ import subprocess
 
 # =======
 # Setup
-logging.basicConfig(
-    level=logging.DEBUG,
-    filename="logs/log.txt",
-    format="%(asctime)s -- %(levelname)s -- %(message)s",
-    datefmt="%d/%b/%y %H:%M:%S",
-    filemode="w"
-)
-logging.info("Started !!")
+try:
+    logging.basicConfig(
+        level=logging.DEBUG,
+        filename="logs/log.txt",
+        format="%(asctime)s -- %(levelname)s -- %(message)s",
+        datefmt="%d/%b/%y %H:%M:%S",
+        filemode="w"
+    )
+    logging.info("Started !!")
+except:
+    pass
 
 if config.db_uri:
     client = MongoClient(config.db_uri, serverSelectionTimeoutMS=10_000)
