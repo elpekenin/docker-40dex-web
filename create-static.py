@@ -2,7 +2,7 @@ from main import *
 from pathlib import Path
 
 app.config.update(
-    SERVER_NAME="elpekenin.tk",
+    SERVER_NAME="elpekenin.dev",
     APPLICATION_ROOT="."
 )
 
