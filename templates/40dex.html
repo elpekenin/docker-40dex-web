@@ -11,7 +11,7 @@
    <div class="input-group-prepend">
     <span class="input-group-text">🔍</span>
   </div>
-  <input type="text" class="form-control" placeholder="Search" oninput="rows_filter(this.value.toLowerCase());">
+  <input type="text" class="form-control" placeholder="Search" oninput="document.querySelectorAll('tr').forEach((e) => e.className.includes(this.value.toLowerCase())?e.style='':e.style='display: none;');">
 </div>
 
 {# Pokemon sprites #}
