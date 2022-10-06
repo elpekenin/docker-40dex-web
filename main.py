@@ -229,7 +229,7 @@ def dex(_region="kanto"):
     return get_40dex_page(parse_region(_region))
 
 @app.post("/re-gen/<_region>/")
-def regen(_region="kanto")
+def regen(_region="kanto"):
     if request.get_json()["password"] != config.rm_pass:
         return "No permission"
 
