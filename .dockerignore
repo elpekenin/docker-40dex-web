@@ -1,3 +1,4 @@
+static/html/40dex/*
 log/
 _Dockerfile
 _pycache__
@@ -21,4 +22,3 @@ coverage.xml
 .mypy_cache
 .pytest_cache
 .hypothesis
-

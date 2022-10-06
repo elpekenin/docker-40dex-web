@@ -1,10 +1,8 @@
 {% include "header.html" %}
-
 <nav class="navbar navbar-dark bg-dark fixed-top justify-content-md-center">
 {% include "40dex-header.html" %} {# Visible #}
 <nav class="navbar navbar-dark">
 {% include "40dex-header.html" %} {# Placeholder for alignment #}
-
 {# Searchbar #}
 <br>
 <div class="input-group mb-3" style="width: min(50vw, 500px); margin-left: auto; margin-right: 10vw;">
@@ -13,7 +11,6 @@
   </div>
   <input type="text" class="form-control" placeholder="Search" oninput="document.querySelectorAll('tr').forEach((e) => e.className.includes(this.value.toLowerCase())?e.style='':e.style='display: none;');">
 </div>
-
 {# Pokemon sprites #}
 <table style="margin-left: auto; margin-right: auto; text-align: center; transform: translateY(10px);">
 {# Region selector #}
@@ -24,21 +21,16 @@
     <td  style="--size: {{size}};">
   {% for poke, values in row.items() %}
     {% set dex = get_dex(poke) %}
-
     {% set off1 = -105*loop.index0 %}
     {% set off2 = off1-105 %}
-  
-    {% set off3 = off2+160 %}
+      {% set off3 = off2+160 %}
     {% set off4 = -20 %}
-
     {% set off5 = off3+80 %}
-
     {% set border_color="red" %}
     {% if values[0] %} {# 40dex #}
       {% if vars.update({'done': True}) %}{% endif %}
       {% set border_color="green" %}
     {% endif %}
-
     {% set image_path="images/sprites/original/{}.png".format(dex|string) %}
     {% if values[1] %} {# Trade counter #}
       {% set image_path="images/sprites/edited/{}.png".format(dex|string) %}
@@ -48,11 +40,9 @@
         <div style="font-weight: bold; font-size: calc(0.2*var(--size)); text-shadow: 0 0 2px #000; position: absolute; top: 2%; right: 10%; font-family: sans-serif;"> {{values[0]}} </div>
       </div>                       
   {% endfor %} {# Pokes #}
-
       <b class="align-middle" style="display: inline-block; font-size: calc(0.6*var(--size));"> &nbsp {{ "✅" if vars.done else "❌" }}</b>
     </td>
   </tr>
 {% endfor %} {# Families #}
 </table>
-
 {% include "footer.html" %}

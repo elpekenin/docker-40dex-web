@@ -3,6 +3,9 @@ SHELL ["/bin/bash", "-c"]
 
 MAINTAINER Pablo (elpekenin) Martinez Bernal "martinezbernalpablo@gmail.com"
 
+ARG DB_URI
+ENV DB_URI=$DB_URI
+
 # Download all files
 WORKDIR /app
 RUN git clone https://github.com/elpekenin/docker-website && shopt -s dotglob && mv -v docker-website/* .
@@ -10,7 +13,10 @@ RUN git clone https://github.com/elpekenin/docker-website && shopt -s dotglob &&
 # Install dependencies
 RUN pip3 install -r requirements.txt
 
-# Save build time
+# Create static 40dex HTML
+RUN python create-static.py
+
+# Store build time
 RUN date +%d/%m/%Y > build-timestamp
 
 CMD ["/app/entrypoint.sh"]

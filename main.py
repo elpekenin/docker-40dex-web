@@ -1,11 +1,15 @@
 import config
 from flask import (
     Flask,
-    render_template
+    redirect,
+    render_template,
+    send_from_directory,
+    url_for
 )
 from flask_compress import Compress
 import json
 import logging
+from os import path
 from pymongo import MongoClient
 from requests import get
 import subprocess
@@ -15,14 +19,14 @@ import subprocess
 logging.basicConfig(
     level=logging.DEBUG,
     filename="logs/log.txt",
-    format="%(asctime)s -- %(message)s",
+    format="%(asctime)s -- %(levelname)s -- %(message)s",
     datefmt="%d/%b/%y %H:%M:%S",
     filemode="w"
 )
 logging.info("Started !!")
 
 if config.db_uri:
-    client = MongoClient(config.db_uri, serverSelectionTimeoutMS=5000)
+    client = MongoClient(config.db_uri, serverSelectionTimeoutMS=10_000)
 else:
     client = MongoClient(
         config.db_ip,
@@ -47,9 +51,8 @@ def read_from_cache(query):
 
 
 def get_dex(name):   
-    # Don't use the DB nor PokeAPI, it's slow
     # FIXME This will break when new pokemons get added
-    return read_from_cache(str(name).lower())
+    return read_from_cache(name.lower())
 
 app.jinja_env.globals["get_dex"] = get_dex
 
@@ -85,46 +88,11 @@ def width_from_row(row):
 
 app.jinja_env.globals["width_from_row"] = width_from_row
 
-# =======
-# Routes
-@app.get("/")
-def hello():
-    return "Hello World!"
 
-@app.get("/40dex/stats/")
-def dex_stats():
-    dex = list(database["40dex"].find())
-
-    total = len(dex)
-    
-    pokes = 0
-    families = 0
-    for row in dex:
-        add = True
-        for key, value in row.items():
-            if key in ["_id", "regions"]:
-                continue
-            
-            if value > 0:
-                pokes += value
-                if add:
-                    families += 1
-                    add = False
-
-        
-    return render_template(
-        "40dex-stats.html",
-        families=families,
-        pokes=pokes,
-        total=total
-    )
-
-@app.get("/40dex/")
-@app.get("/40dex/<_region>/")
-def dex(_region="kanto"):
+def parse_region(_region):
     try:
         region = int(_region) #parse to region id
-        if region == 0:
+        if region == 0: # default value just in case
             region = 1
     except:
         region = _region.lower()
@@ -141,6 +109,10 @@ def dex(_region="kanto"):
         }.get(region, 1)
     logging.debug(f"Parsed region {region} from '{_region}'")
 
+    return region
+
+
+def _get_data_from_region(region):
     # get all pokedex filtered by region
     # TODO try to make the aggregation on a single query
     _filter = {"regions": {"$all": [region]}}
@@ -161,7 +133,20 @@ def dex(_region="kanto"):
 
         data.append(temp)
 
-    return render_template(
+    return data
+
+
+def get_40dex_page(region):
+    file_path   = f"html/40dex/{region}.html"
+    static_path = f"static/{file_path}"
+
+    # Use static file if no changes were made
+    if path.isfile(static_path):
+        return send_from_directory("static", file_path) # return static file
+
+    # Re-gen HTML
+    data = _get_data_from_region(region)
+    page = render_template(
         "40dex.html",
         data=data,
         region=region,
@@ -169,3 +154,71 @@ def dex(_region="kanto"):
         path="/40dex"
     )
 
+    # Save static file
+    with open(static_path, "w") as f:
+        f.write(page)
+
+    # Return content
+    return page
+
+
+def _get_40dex_stats():
+    dex = list(database["40dex"].find())
+    total = len(dex)
+    pokes = 0
+    families = 0
+
+    for row in dex:
+        add = True
+        for key, value in row.items():
+            if key in ["_id", "regions"]:
+                continue
+
+            if value > 0:
+                pokes += value
+                if add:
+                    families += 1
+                    add = False
+
+    return families, pokes, total
+
+
+def get_40dex_stats_page():
+    file_path   = "html/40dex/stats.html"
+    static_path = f"static/{file_path}"
+
+    # Use static file if no changes were made
+    if path.isfile(static_path):
+        return send_from_directory("static", file_path) # return static file
+
+    # Re-gen HTML
+    families, pokes, total = _get_40dex_stats()
+    page = render_template(
+        "40dex-stats.html",
+        families=families,
+        pokes=pokes,
+        total=total
+    )
+
+    # Save static file
+    with open(static_path, "w") as f:
+        f.write(page)
+
+    # Return content
+    return page
+
+
+# =======
+# Routes
+@app.get("/")
+def hello():
+    return "Hello World!"
+
+@app.get("/40dex/stats/")
+def dex_stats():
+    return get_40dex_stats_page()
+
+@app.get("/40dex/")
+@app.get("/40dex/<_region>/")
+def dex(_region="kanto"):
+    return get_40dex_page(parse_region(_region))
