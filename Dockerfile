@@ -13,10 +13,10 @@ RUN git clone https://github.com/elpekenin/docker-website && shopt -s dotglob &&
 # Install dependencies
 RUN pip3 install -r requirements.txt
 
-# Create static 40dex HTML
-RUN python create-static.py
-
 # Store build time
 RUN date +%d/%m/%Y > build-timestamp
+
+# Create static 40dex HTML
+RUN python create-static.py
 
 CMD ["/app/entrypoint.sh"]
