@@ -5,13 +5,13 @@ By no means a complete tutorial here. If you want to make a copy, you'll need to
 version: "3.9"
 services:
   web:
-    build: https://raw.githubusercontent.com/elpekenin/docker-website/main/Dockerfile
+    build:
+      args:
+        DB_URI: "${DB_URI}"
+      context: "https://github.com/elpekenin/docker-website.git#main"
     container_name: web
     environment:
-      DB_IP: "${DB_IP}"
-      DB_USER: "${DB_USER}"
-      DB_PASS: "${DB_PASS}"
-      DB_AUTH: "${DB_AUTH}"
+      DB_URI: "${DB_URI}"
     ports:
       - 80:5000
     restart: always
@@ -30,6 +30,7 @@ services:
       DB_USER: "${DB_USER}"
       DB_PASS: "${DB_PASS}"
       DB_AUTH: "${DB_AUTH}"
+
       BOT_TOKEN: "${BOT_TOKEN}"
       BOT_USERNAME: "elpekenin" #your telegram username here, without @
     restart: always
