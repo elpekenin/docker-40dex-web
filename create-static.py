@@ -2,7 +2,8 @@ from main import *
 from pathlib import Path
 
 app.config.update(
-    APPLICATION_ROOT=".",
+    APPLICATION_ROOT="/40dex/",
+    PREFERRED_URL_SCHEME=config.scheme,
     SERVER_NAME=config.domain,
 )
 

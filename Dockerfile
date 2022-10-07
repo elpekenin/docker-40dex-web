@@ -9,6 +9,9 @@ ENV DB_URI=$DB_URI
 ARG SV_DOMAIN
 ENV SV_DOMAIN=$SV_DOMAIN
 
+ARG SV_SCHEME
+ENV SV_SCHEME=$SV_SCHEME
+
 # Download all files
 WORKDIR /app
 RUN git clone https://github.com/elpekenin/docker-40dex-web && shopt -s dotglob && mv -v docker-40dex-web/* .
