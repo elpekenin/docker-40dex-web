@@ -46,7 +46,9 @@ database = client["website"]
 app = Flask(__name__)
 
 app.config.update(
+    APPLICATION_ROOT="/40dex/",
     PREFERRED_URL_SCHEME=config.scheme,
+    SERVER_NAME=config.domain,
 )
 
 app.wsgi_app = ProxyFix(app.wsgi_app, x_for=1, x_host=1)
@@ -223,14 +225,14 @@ def get_40dex_stats_page():
 
 # =======
 # Routes
+@app.get("/stats/")
+def dex_stats():
+    return get_40dex_stats_page()
+
 @app.get("/")
 @app.get("/<_region>/")
 def dex(_region="kanto"):
     return get_40dex_page(parse_region(_region))
-
-@app.get("/stats/")
-def dex_stats():
-    return get_40dex_stats_page()
 
 @app.post("/re-gen/<_region>/")
 def regen(_region="kanto"):
