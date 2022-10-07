@@ -3,7 +3,7 @@ from pathlib import Path
 
 app.config.update(
     APPLICATION_ROOT=".",
-    SERVER_NAME="elpekenin.dev",
+    SERVER_NAME=config.domain,
 )
 
 print("Creating static HTMLs")

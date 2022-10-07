@@ -8,11 +8,14 @@ services:
     build:
       args:
         DB_URI: "${DB_URI}"
-      context: "https://github.com/elpekenin/docker-website.git#main"
+      context: "${GH_40DEX}"
     container_name: web
     environment:
       DB_URI: "${DB_URI}"
       RM_PASS: "${RM_PASS}"
+      SV_DOMAIN: "${SV_DOMAIN}"
+      SV_SCHEME: "${SV_SCHEME}"
+      GH_LINK: "${GH_40DEX}"
     ports:
       - 80:5000
     restart: always
@@ -22,20 +25,19 @@ services:
         target: /app/logs
 
   bot-web:
-    build: https://raw.githubusercontent.com/elpekenin/docker-bot-web/main/Dockerfile
+    build: "${GH_BOT-WEB}"
     container_name: bot-web
     environment:
-      DB_URI: "${DB_URI}" #uri takes precedence over parameterized login
-
+      DB_URI: "${DB_URI}"
+      #uri takes precedence over parameterized login
       DB_IP: "${DB_IP}"
       DB_USER: "${DB_USER}"
       DB_PASS: "${DB_PASS}"
       DB_AUTH: "${DB_AUTH}"
-
       BOT_TOKEN: "${BOT_TOKEN}"
       BOT_USERNAME: "elpekenin" #your telegram username here, without @
-
       RM_PASS: "${RM_PASS}" #password to force re-generation of html
+      GH_LINK: "${GH_BOT-WEB}"
     restart: always
     volumes:
       - type: bind

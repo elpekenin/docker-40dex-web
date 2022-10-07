@@ -45,7 +45,7 @@ database = client["website"]
 app = Flask(__name__)
 
 app.config.update(
-    PREFERRED_URL_SCHEME="https",
+    PREFERRED_URL_SCHEME=config.scheme,
 )
 
 Compress(app)
@@ -84,7 +84,7 @@ try:
 except:
     commit = "Couldn't find commit hash"
 
-app.jinja_env.globals["commit"] = commit
+app.jinja_env.globals["commit_link"] = f"<a href='{config.gh_link}'>{commit}</a>"
 
 
 def class_from_row(row):

@@ -8,3 +8,8 @@ db_pass = os.getenv("DB_PASS")
 db_auth = os.getenv("DB_AUTH")
 
 rm_pass = os.getenv("RM_PASS")
+
+scheme = os.getenv("SV_SCHEME")
+domain = os.getenv("SV_DOMAIN")
+
+gh_link = os.getenv("GH_LINK")
