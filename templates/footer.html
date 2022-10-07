@@ -1,6 +1,6 @@
     <hr>
     <div class="d-flex justify-content-center">
-      <h5><i><b>Docker image built on: {{ build_date }} || With commit: {{ commit_link }}</b></i></h5>
+      <h5><i><b>Docker image built on: {{ build_date }} || With commit: {{ commit_link | safe }}</b></i></h5>
     </div>
   </body>
 </html>
