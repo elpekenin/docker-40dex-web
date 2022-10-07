@@ -16,7 +16,7 @@ from pymongo import MongoClient
 from requests import get
 import subprocess
 from werkzeug.middleware.proxy_fix import ProxyFix
-    
+
 # =======
 # Setup
 try:
@@ -224,17 +224,13 @@ def get_40dex_stats_page():
 # =======
 # Routes
 @app.get("/")
-def hello():
-    return "Hello World!"
-
-@app.get("/40dex/stats/")
-def dex_stats():
-    return get_40dex_stats_page()
-
-@app.get("/40dex/")
-@app.get("/40dex/<_region>/")
+@app.get("/<_region>/")
 def dex(_region="kanto"):
     return get_40dex_page(parse_region(_region))
+
+@app.get("/stats/")
+def dex_stats():
+    return get_40dex_stats_page()
 
 @app.post("/re-gen/<_region>/")
 def regen(_region="kanto"):
