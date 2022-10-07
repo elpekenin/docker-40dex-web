@@ -2,8 +2,8 @@ from main import *
 from pathlib import Path
 
 app.config.update(
+    APPLICATION_ROOT=".",
     SERVER_NAME="elpekenin.dev",
-    APPLICATION_ROOT="."
 )
 
 print("Creating static HTMLs")

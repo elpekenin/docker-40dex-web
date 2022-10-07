@@ -43,6 +43,11 @@ else:
 database = client["website"]
 
 app = Flask(__name__)
+
+app.config.update(
+    PREFERRED_URL_SCHEME="https",
+)
+
 Compress(app)
 
 with open("dex-name.json", "r") as f:
