@@ -6,6 +6,9 @@ MAINTAINER Pablo (elpekenin) Martinez Bernal "martinezbernalpablo@gmail.com"
 ARG DB_URI
 ENV DB_URI=$DB_URI
 
+ARG GH_LINK
+ENV GH_LINK=$GH_LINK
+
 ARG SV_DOMAIN
 ENV SV_DOMAIN=$SV_DOMAIN
 

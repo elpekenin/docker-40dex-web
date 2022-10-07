@@ -89,7 +89,7 @@ try:
 except:
     commit = "Couldn't find commit hash"
 
-app.jinja_env.globals["commit_link"] = f"<a href='{config.gh_link}'>{commit}</a>"
+app.jinja_env.globals["commit_link"] = f'<a href="{config.gh_link}">{commit}</a>'
 
 
 def class_from_row(row):
@@ -166,7 +166,7 @@ def get_40dex_page(region):
         data=data,
         region=region,
         max_region=8,
-        path="/40dex"
+        path=f"{request.url_root}"
     )
 
     # Save static file
