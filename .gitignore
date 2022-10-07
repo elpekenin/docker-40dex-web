@@ -3,6 +3,7 @@
 log.txt
 *.zip
 static/html/*
+build-timestamp
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

@@ -166,7 +166,7 @@ def get_40dex_page(region):
         data=data,
         region=region,
         max_region=8,
-        path=f"{request.url_root}"
+        path=f"{config.scheme}://{config.domain}/40dex"
     )
 
     # Save static file
