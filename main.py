@@ -15,7 +15,8 @@ from os import path
 from pymongo import MongoClient
 from requests import get
 import subprocess
-
+from werkzeug.middleware.proxy_fix import ProxyFix
+    
 # =======
 # Setup
 try:
@@ -47,6 +48,8 @@ app = Flask(__name__)
 app.config.update(
     PREFERRED_URL_SCHEME=config.scheme,
 )
+
+app.wsgi_app = ProxyFix(app.wsgi_app, x_for=1, x_host=1)
 
 Compress(app)
 
