@@ -4,8 +4,10 @@ SHELL ["/bin/bash", "-c"]
 MAINTAINER Pablo (elpekenin) Martinez Bernal "martinezbernalpablo@gmail.com"
 
 ARG DB_URI
+ENV DB_URI=$DB_URI
 
 ARG SV_DOMAIN
+ENV SV_DOMAIN=$SV_DOMAIN
 
 # Download all files
 WORKDIR /app

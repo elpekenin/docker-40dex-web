@@ -7,7 +7,6 @@ app.config.update(
 )
 
 print("Creating static HTMLs")
-
 Path("static/html/40dex/").mkdir(parents=True, exist_ok=True) # create output dir if doesn't exist already
 
 with app.app_context():
