@@ -243,8 +243,10 @@ def regen(_region="kanto"):
 
     # Remove file
     os.remove(f"static/html/40dex/{region}.html")
+    os.remove("static/html/40dex/stats.html")
 
     # Gen new file
     get_40dex_page(region)
+    get_40dex_stats_page()
 
     return "Updated !!"
