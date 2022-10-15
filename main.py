@@ -12,7 +12,10 @@ import json
 import logging
 import os
 from os import path
-from pymongo import MongoClient
+from pymongo import (
+    ASCENDING,
+    MongoClient
+)
 from requests import get
 import subprocess
 from werkzeug.middleware.proxy_fix import ProxyFix
@@ -131,7 +134,7 @@ def _get_data_from_region(region):
     # get all pokedex filtered by region
     # TODO try to make the aggregation on a single query
     _filter = {"regions": {"$all": [region]}}
-    _find = lambda x: list(database[x].find(_filter, {"_id": False}).sort("id", pymongo.ASCENDING))
+    _find = lambda x: list(database[x].find(_filter, {"_id": False}).sort("id", ASCENDING))
     _data = [
         _find("40dex"),
         _find("trade-dex")
