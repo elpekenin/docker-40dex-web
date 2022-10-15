@@ -131,29 +131,20 @@ def _get_data_from_region(region):
     # get all pokedex filtered by region
     # TODO try to make the aggregation on a single query
     _filter = {"regions": {"$all": [region]}}
-    _find = lambda x: list(database[x].find(_filter, {"_id": False}))
+    _find = lambda x: list(database[x].find(_filter, {"_id": False}).sort("id", pymongo.ASCENDING))
     _data = [
         _find("40dex"),
         _find("trade-dex")
     ]
 
     data = []
-    for family in _data[0]:
-        found = False
-        temp  = {}
+    for i, family in enumerate(_data[0]):
+        temp = {}
         for poke in family:
             if poke == "regions":
                 continue
 
-            if not found:
-                for i, family2 in enumerate(_data[1]):
-                    for poke2 in family2:
-                        if poke == poke2:
-                            index = i
-                            found = True
-                            break
-
-            temp[poke] = [family[poke], _data[1][index][poke]]
+            temp[poke] = [info[i][poke] for info in _data]
 
         data.append(temp)
 
