@@ -144,7 +144,7 @@ def _get_data_from_region(region):
     for i, family in enumerate(_data[0]):
         temp = {}
         for poke in family:
-            if poke == "regions":
+            if poke in ["id", "regions"]:
                 continue
 
             temp[poke] = [info[i][poke] for info in _data]
@@ -189,7 +189,7 @@ def _get_40dex_stats():
     for row in dex:
         add = True
         for key, value in row.items():
-            if key in ["_id", "regions"]:
+            if key in ["_id", "id", "regions"]:
                 continue
 
             if value > 0:
