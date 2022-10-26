@@ -7,7 +7,6 @@ from flask import (
     send_from_directory,
     url_for
 )
-from flask_compress import Compress
 import json
 import logging
 import os
@@ -55,8 +54,6 @@ app.config.update(
 )
 
 app.wsgi_app = ProxyFix(app.wsgi_app, x_for=1, x_host=1)
-
-Compress(app)
 
 with open("dex-name.json", "r") as f:
     dex_cache = json.load(f)
