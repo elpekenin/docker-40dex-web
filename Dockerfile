@@ -2,7 +2,6 @@
 FROM python:3.11 AS base
 LABEL maintainer="Pablo (elpekenin) Martinez Bernal"
 LABEL email="martinezbernalpablo@gmail.com"
-SHELL ["/bin/bash", "-c"]
 WORKDIR /app
 
 # -- Dependencies --
@@ -12,6 +11,7 @@ RUN pip install -r requirements.txt
 
 # -- Release --
 FROM python:3.11-alpine AS release
+SHELL ["/bin/bash", "-c"]
 WORKDIR /app
 COPY . .
 COPY --from=dependencies /app/requirements.txt .
