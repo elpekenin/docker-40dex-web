@@ -1,5 +1,5 @@
 # -- Base --
-FROM python:3.11-alpine AS base
+FROM python:3.11 AS base
 LABEL maintainer="Pablo (elpekenin) Martinez Bernal"
 LABEL email="martinezbernalpablo@gmail.com"
 WORKDIR /app
@@ -10,7 +10,7 @@ COPY requirements.txt .
 RUN pip3 install -r requirements.txt
 
 # -- Release --
-FROM python:3.11-alpine AS release
+FROM python:3.11 AS release
 WORKDIR /app
 COPY . .
 COPY --from=dependencies /app/requirements.txt .
