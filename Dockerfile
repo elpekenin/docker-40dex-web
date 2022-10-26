@@ -1,5 +1,5 @@
 # -- Base --
-FROM python:3.11 AS base
+FROM python:3.11-alpine AS base
 LABEL maintainer="Pablo (elpekenin) Martinez Bernal"
 LABEL email="martinezbernalpablo@gmail.com"
 WORKDIR /app
@@ -7,7 +7,7 @@ WORKDIR /app
 # -- Dependencies --
 FROM base AS dependencies
 COPY requirements.txt .
-RUN pip install -r requirements.txt
+RUN pip3 install -r requirements.txt
 
 # -- Release --
 FROM python:3.11-alpine AS release
@@ -38,6 +38,6 @@ RUN git clone https://github.com/elpekenin/docker-40dex-web && cp -r docker-40de
 
 RUN date +%d/%m/%Y > build-timestamp
 
-RUN python create-static.py
+RUN python3 create-static.py
 
 CMD ["/app/entrypoint.sh"]
