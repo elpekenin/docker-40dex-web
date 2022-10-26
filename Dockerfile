@@ -31,6 +31,9 @@ ENV SV_DOMAIN=$SV_DOMAIN
 ARG SV_SCHEME
 ENV SV_SCHEME=$SV_SCHEME
 
+RUN pkg install git -y
+
+ADD "https://api.github.com/repos/elpekenin/docker-40dex-web/commits?per_page=1" latest_commit
 RUN git clone https://github.com/elpekenin/docker-40dex-web && shopt -s dotglob && mv -v docker-40dex-web/* .
 
 RUN date +%d/%m/%Y > build-timestamp
