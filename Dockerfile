@@ -34,7 +34,9 @@ RUN apk update
 RUN apk add git
 
 ADD "https://api.github.com/repos/elpekenin/docker-40dex-web/commits?per_page=1" latest_commit
-RUN git clone https://github.com/elpekenin/docker-40dex-web && cp -r docker-40dex-web/{.,}* . && rm -rf docker-40dex-web
+RUN git clone https://github.com/elpekenin/docker-40dex-web
+RUN cp -r docker-40dex-web/{.,}* . 
+RUN rm -rf docker-40dex-web
 
 RUN date +%d/%m/%Y > build-timestamp
 
