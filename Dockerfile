@@ -1,21 +1,7 @@
-# -- Base --
-FROM python:3.11 AS base
+FROM python:3.11
 LABEL maintainer="Pablo (elpekenin) Martinez Bernal"
 LABEL email="martinezbernalpablo@gmail.com"
 WORKDIR /app
-
-# -- Dependencies --
-FROM base AS dependencies
-COPY requirements.txt .
-RUN pip3 install -r requirements.txt
-
-# -- Release --
-FROM python:3.11 AS release
-WORKDIR /app
-COPY --from=dependencies /app/requirements.txt .
-COPY --from=dependencies /root/.cache /root/.cache
-
-RUN pip3 install -r requirements.txt
 
 ARG DB_URI
 ENV DB_URI=$DB_URI
@@ -33,6 +19,7 @@ RUN apt update && apt install git
 
 ADD "https://api.github.com/repos/elpekenin/docker-40dex-web/commits?per_page=1" latest_commit
 RUN git clone https://github.com/elpekenin/docker-40dex-web && cp -r docker-40dex-web/* . && mv docker-40dex-web/.git . && rm -rf docker-40dex-web
+RUN pip3 install -r requirements.txt
 
 RUN date +%d/%m/%Y > build-timestamp
 
